@@ -96,57 +96,14 @@
                 <div class="container mx-auto px-6">
                     <h2 class="text-3xl font-bold mb-8 text-center text-blue-600">Catálogo de Repuestos</h2>
                     
-                    <!-- Grid de productos -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        
-                        <!-- Producto 1 -->
-                        <div class="bg-gray-100 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <img src="https://placehold.co/600x400/D1D5DB/1F2937?text=Repuesto+1" alt="Descripción del Repuesto 1" class="w-full h-48 object-cover">
-                            <div class="p-6">
-                                <h3 class="font-semibold text-lg text-gray-800 mb-1">Repuesto 1</h3>
-                                <p class="text-gray-600 text-sm mb-4">Breve descripción del repuesto. Compatible con varios modelos.</p>
-                                <button data-name="Repuesto 1" class="btn-consultar w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">
-                                    Consultar por WhatsApp
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Producto 2 -->
-                        <div class="bg-gray-100 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <img src="https://placehold.co/600x400/D1D5DB/1F2937?text=Repuesto+2" alt="Descripción del Repuesto 2" class="w-full h-48 object-cover">
-                            <div class="p-6">
-                                <h3 class="font-semibold text-lg text-gray-800 mb-1">Repuesto 2</h3>
-                                <p class="text-gray-600 text-sm mb-4">Breve descripción del repuesto. Se adapta a diferentes marcas.</p>
-                                <button data-name="Repuesto 2" class="btn-consultar w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">
-                                    Consultar por WhatsApp
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Producto 3 -->
-                        <div class="bg-gray-100 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <img src="https://placehold.co/600x400/D1D5DB/1F2937?text=Repuesto+3" alt="Descripción del Repuesto 3" class="w-full h-48 object-cover">
-                            <div class="p-6">
-                                <h3 class="font-semibold text-lg text-gray-800 mb-1">Repuesto 3</h3>
-                                <p class="text-gray-600 text-sm mb-4">Breve descripción del repuesto. ¡Calidad garantizada!</p>
-                                <button data-name="Repuesto 3" class="btn-consultar w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">
-                                    Consultar por WhatsApp
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Producto 4 -->
-                        <div class="bg-gray-100 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <img src="https://placehold.co/600x400/D1D5DB/1F2937?text=Repuesto+4" alt="Descripción del Repuesto 4" class="w-full h-48 object-cover">
-                            <div class="p-6">
-                                <h3 class="font-semibold text-lg text-gray-800 mb-1">Repuesto 4</h3>
-                                <p class="text-gray-600 text-sm mb-4">Breve descripción del repuesto. Ideal para mantenimiento.</p>
-                                <button data-name="Repuesto 4" class="btn-consultar w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">
-                                    Consultar por WhatsApp
-                                </button>
-                            </div>
-                        </div>
-
+                    <!-- Campo de búsqueda -->
+                    <div class="w-full max-w-lg mx-auto mb-8">
+                        <input type="text" id="product-search" placeholder="Buscar repuestos..." class="w-full p-3 rounded-full border-2 border-gray-300 focus:outline-none focus:border-blue-500 transition-colors duration-300 shadow-sm">
+                    </div>
+                    
+                    <!-- Contenedor donde los productos se renderizarán dinámicamente -->
+                    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        <!-- Aquí se insertarán las tarjetas de productos con JavaScript -->
                     </div>
                 </div>
             </section>
@@ -173,31 +130,206 @@
         </div>
     </div>
 
+    <!-- Modal para la vista de detalles del producto -->
+    <div id="product-modal" class="fixed inset-0 bg-black/75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
+            <button id="close-modal-button" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">
+                &times;
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Contenedor del slider de imágenes -->
+                <div class="flex flex-col items-center">
+                    <div class="relative w-full overflow-hidden rounded-xl shadow-lg">
+                        <img id="modal-product-image" src="" alt="Imagen del producto" class="w-full h-80 object-contain">
+                        <button id="slider-prev" class="absolute top-1/2 left-2 -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 text-xl">&lt;</button>
+                        <button id="slider-next" class="absolute top-1/2 right-2 -translate-y-1/2 text-white bg-gray-800 bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 text-xl">&gt;</button>
+                    </div>
+                </div>
+
+                <!-- Detalles del producto -->
+                <div class="flex flex-col justify-center">
+                    <h2 id="modal-product-name" class="text-3xl font-bold mb-2 text-gray-800"></h2>
+                    <p id="modal-product-description" class="text-gray-600 leading-relaxed mb-6"></p>
+                    <button id="modal-whatsapp-button" class="w-full bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300">
+                        Consultar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Lógica de JavaScript para el mensaje emergente
-        const messageBox = document.getElementById('message-container');
-        const messageText = document.getElementById('message-text');
-        const closeButton = document.getElementById('close-message');
-        const consultarButtons = document.querySelectorAll('.btn-consultar');
+        // Array de objetos con la información de los productos
+        const products = [
+            // CADA OBJETO ES UN PRODUCTO. Para agregar más, solo copia y pega este bloque.
+            { 
+                id: 1, 
+                name: 'Resistencia 90mm', 
+                description: 'Repuesto de resistencia para dispenser de agua de 90mm. Calidad premium.', 
+                fullDescription: 'Resistencia de 90mm, diseñada para un calentamiento rápido y eficiente. Compatible con la mayoría de los modelos del mercado. Fabricada con materiales resistentes a la corrosión para una larga vida útil.', 
+                images: ['./images/Resistencia 90mm_1.png', './images/Resistencia 90mm_2.png', './images/Resistencia 90mm_3.png'] 
+            },
+            { 
+                id: 2, 
+                name: 'Resistencia 100mm', 
+                description: 'Breve descripción del repuesto. Se adapta a diferentes marcas.', 
+                fullDescription: 'El repuesto 2 es la solución perfecta para tu dispenser. Su diseño versátil permite su uso en diversas marcas y modelos, garantizando la compatibilidad. Ideal para reparaciones rápidas y efectivas, devolviendo la funcionalidad a tu equipo.', 
+                images: ['./images/Resistencia 100mm_1.png', './images/Resistencia 100mm_2.png', './images/Resistencia 100mm_3.png'] 
+            },
+            { 
+                id: 3, 
+                name: 'Resistencia 115mm', 
+                description: 'Breve descripción del repuesto. ¡Calidad garantizada!', 
+                fullDescription: 'Con el repuesto 3, la calidad está garantizada. Esta pieza ha sido rigurosamente probada para cumplir con los más altos estándares de rendimiento y seguridad. Es la elección de los profesionales para asegurar la máxima eficiencia de tu dispenser.', 
+                images: ['./images/Resistencia 115mm_1.png', './images/Resistencia 115mm_2.png', './images/Resistencia 115mm_3.png'] 
+            },
+            { id: 4, name: 'Repuesto 4', description: 'Breve descripción del repuesto. Ideal para mantenimiento.', fullDescription: 'El repuesto 4 es tu aliado para el mantenimiento preventivo. Con su uso regular, podrás evitar futuras fallas y prolongar la vida útil de tu dispenser de agua. Invierte en su durabilidad y tranquilidad.', images: ['./images/repuesto-4.webp', './images/repuesto-4-variante.webp'] },
+            { id: 5, name: 'Repuesto 5', description: 'Breve descripción del repuesto. Compatible con varios modelos.', fullDescription: 'Este repuesto 5 es una pieza de alta calidad, compatible con una gran variedad de dispensers. Te permitirá solucionar problemas comunes de forma sencilla y eficiente.', images: ['./images/repuesto-5.webp'] },
+            { id: 6, name: 'Repuesto 6', description: 'Breve descripción del repuesto. Se adapta a diferentes marcas.', fullDescription: 'El repuesto 6 es una pieza fundamental para el correcto funcionamiento del sistema de enfriamiento de tu equipo. Rápido de instalar y compatible con varias marcas líderes.', images: ['./images/repuesto-6.webp'] },
+            { id: 7, name: 'Repuesto 7', description: 'Breve descripción del repuesto. ¡Calidad garantizada!', fullDescription: 'Con el repuesto 7, obtienes una calidad excepcional. Un componente crucial para la línea de agua, asegurando un flujo constante y libre de impurezas. No comprometas la calidad del agua.', images: ['./images/repuesto-7.webp'] },
+            { id: 8, name: 'Repuesto 8', description: 'Breve descripción del repuesto. Ideal para mantenimiento.', fullDescription: 'Repuesto 8 es un componente de fácil reemplazo, ideal para mantenimiento preventivo. Ayuda a prolongar la vida útil de tu dispenser, evitando costosas reparaciones a futuro.', images: ['./images/repuesto-8.webp'] },
+            { id: 9, name: 'Repuesto 9', description: 'Breve descripción del repuesto. Compatible con varios modelos.', fullDescription: 'El repuesto 9 es una pieza versátil y robusta. Diseñado para soportar un uso intensivo, es la solución ideal para dispensers de alto tráfico en oficinas o espacios comerciales.', images: ['./images/repuesto-9.webp'] },
+            { id: 10, name: 'Repuesto 10', description: 'Breve descripción del repuesto. Se adapta a diferentes marcas.', fullDescription: 'Repuesto 10 es un componente esencial para el sistema de filtrado de tu dispenser. Asegura que el agua se mantenga limpia y sin sabor, mejorando la calidad de cada vaso.', images: ['./images/repuesto-10.webp'] },
+            { id: 11, name: 'Repuesto 11', description: 'Breve descripción del repuesto. ¡Calidad garantizada!', fullDescription: 'Con el repuesto 11, la calidad es nuestra prioridad. Esta pieza es un reemplazo directo para varios modelos, garantizando una instalación sin complicaciones y un funcionamiento perfecto.', images: ['./images/repuesto-11.webp'] },
+            { id: 12, name: 'Repuesto 12', description: 'Breve descripción del repuesto. Ideal para mantenimiento.', fullDescription: 'El repuesto 12 es perfecto para el mantenimiento básico. Te permite solucionar problemas menores sin la necesidad de un técnico, ahorrando tiempo y dinero.', images: ['./images/repuesto-12.webp'] },
+            { id: 13, name: 'Repuesto 13', description: 'Breve descripción del repuesto. Compatible con varios modelos.', fullDescription: 'Este repuesto 13 está diseñado para alta compatibilidad y durabilidad. Un componente clave para asegurar que el sistema de tu dispenser opere sin fallas.', images: ['./images/repuesto-13.webp'] },
+            { id: 14, name: 'Repuesto 14', description: 'Breve descripción del repuesto. Se adapta a diferentes marcas.', fullDescription: 'El repuesto 14 es la pieza de repuesto ideal para problemas de goteo o fugas. Su diseño preciso y materiales de calidad garantizan un sellado perfecto.', images: ['./images/repuesto-14.webp'] },
+            { id: 15, name: 'Repuesto 15', description: 'Breve descripción del repuesto. ¡Calidad garantizada!', fullDescription: 'Con el repuesto 15, aseguras que tu dispenser funcione como el primer día. Un componente crítico para el sistema de presión de agua, manteniendo un flujo constante y sin interrupciones.', images: ['./images/repuesto-15.webp'] },
+            { id: 16, name: 'Repuesto 16', description: 'Breve descripción del repuesto. Ideal para mantenimiento.', fullDescription: 'Repuesto 16 es una pieza de reemplazo simple pero vital. Es la solución perfecta para un mantenimiento rápido y efectivo, manteniendo tu equipo en óptimas condiciones.', images: ['./images/repuesto-16.webp'] },
+            { id: 17, name: 'Repuesto 17', description: 'Breve descripción del repuesto. Compatible con varios modelos.', fullDescription: 'Este repuesto 17 es una pieza de alta calidad, compatible con una gran variedad de dispensers. Te permitirá solucionar problemas comunes de forma sencilla y eficiente.', images: ['./images/repuesto-17.webp'] },
+            { id: 18, name: 'Repuesto 18', description: 'Breve descripción del repuesto. Se adapta a diferentes marcas.', fullDescription: 'El repuesto 18 es una pieza fundamental para el correcto funcionamiento del sistema de enfriamiento de tu equipo. Rápido de instalar y compatible con varias marcas líderes.', images: ['./images/repuesto-18.webp'] },
+            { id: 19, name: 'Repuesto 19', description: 'Breve descripción del repuesto. ¡Calidad garantizada!', fullDescription: 'Con el repuesto 19, obtienes una calidad excepcional. Un componente crucial para la línea de agua, asegurando un flujo constante y libre de impurezas. No comprometas la calidad del agua.', images: ['./images/repuesto-19.webp'] },
+            { id: 20, name: 'Repuesto 20', description: 'Breve descripción del repuesto. Ideal para mantenimiento.', fullDescription: 'Repuesto 20 es un componente de fácil reemplazo, ideal para mantenimiento preventivo. Ayuda a prolongar la vida útil de tu dispenser, evitando costosas reparaciones a futuro.', images: ['./images/repuesto-20.webp'] },
+        ];
+
+        // Referencias a elementos del DOM
+        const productsGrid = document.getElementById('products-grid');
+        const searchInput = document.getElementById('product-search');
+        const productModal = document.getElementById('product-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const modalProductName = document.getElementById('modal-product-name');
+        const modalProductDescription = document.getElementById('modal-product-description');
+        const modalProductImage = document.getElementById('modal-product-image');
+        const modalWhatsappButton = document.getElementById('modal-whatsapp-button');
+        const sliderPrevButton = document.getElementById('slider-prev');
+        const sliderNextButton = document.getElementById('slider-next');
+
+        let currentProduct = null;
+        let currentImageIndex = 0;
+
+        // Función para crear la tarjeta de un producto
+        const createProductCard = (product) => {
+            const card = document.createElement('div');
+            // La tarjeta completa es ahora clicable para abrir el modal
+            card.className = 'product-card bg-gray-100 rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer';
+            card.setAttribute('data-id', product.id);
+            
+            // Usamos la primera imagen del array como miniatura
+            const firstImage = product.images.length > 0 ? product.images[0] : '';
+            card.innerHTML = `
+                <div class="w-full h-48 flex items-center justify-center bg-white p-2">
+                    <img src="${firstImage}" alt="Imagen de ${product.name}" class="object-contain max-h-full">
+                </div>
+                <div class="p-6">
+                    <h3 class="font-semibold text-lg text-gray-800 mb-1">${product.name}</h3>
+                    <p class="text-gray-600 text-sm mb-4">${product.description}</p>
+                </div>
+            `;
+            return card;
+        };
         
-        // Event listener para cada botón de "Consultar"
-        consultarButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const productName = button.getAttribute('data-name');
-                const whatsappMessage = encodeURIComponent(`Hola, me interesa el ${productName} que vi en tu página web. ¿Podrías darme más información?`);
-                
+        // Función para renderizar los productos
+        const renderProducts = (productsToRender) => {
+            productsGrid.innerHTML = ''; // Limpia la grilla antes de renderizar
+            productsToRender.forEach(product => {
+                productsGrid.appendChild(createProductCard(product));
+            });
+        };
+
+        // Renderiza todos los productos al cargar la página
+        renderProducts(products);
+
+        // Lógica para abrir el modal de producto
+        const openProductModal = (product) => {
+            currentProduct = product;
+            currentImageIndex = 0; // Reiniciar el slider
+            
+            modalProductName.textContent = product.name;
+            modalProductDescription.textContent = product.fullDescription;
+            updateImage();
+
+            // Configurar el botón de WhatsApp del modal
+            const whatsappMessage = encodeURIComponent(`Hola, me interesa el ${product.name} que vi en tu página web. ¿Podrías darme más información?`);
+            modalWhatsappButton.onclick = () => {
                 // Muestra un mensaje en pantalla en lugar de una alerta del navegador
-                messageText.textContent = `Serás redirigido a WhatsApp para consultar por ${productName}.`;
+                messageText.textContent = `Serás redirigido a WhatsApp para consultar por ${product.name}.`;
                 messageBox.style.display = 'block';
 
                 // Redirige al usuario a WhatsApp después de un breve delay
                 setTimeout(() => {
-                    window.location.href = `https://wa.me/5491112345678?text=${whatsappMessage}`;
+                    window.location.href = `https://wa.me/5491166082608?text=${whatsappMessage}`;
                 }, 1500); 
-            });
+            };
+
+            productModal.style.display = 'flex';
+        };
+
+        // Función para actualizar la imagen del slider
+        const updateImage = () => {
+            if (currentProduct && currentProduct.images.length > 0) {
+                modalProductImage.src = currentProduct.images[currentImageIndex];
+            }
+        };
+
+        // Lógica del slider de imágenes
+        sliderPrevButton.addEventListener('click', () => {
+            if (currentProduct.images.length > 1) {
+                currentImageIndex = (currentImageIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+                updateImage();
+            }
         });
 
-        // Event listener para cerrar el mensaje
+        sliderNextButton.addEventListener('click', () => {
+            if (currentProduct.images.length > 1) {
+                currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
+                updateImage();
+            }
+        });
+
+        // Lógica para cerrar el modal
+        const closeProductModal = () => {
+            productModal.style.display = 'none';
+        };
+        closeModalButton.addEventListener('click', closeProductModal);
+
+        // Usamos event delegation en el contenedor principal para abrir el modal
+        productsGrid.addEventListener('click', (event) => {
+            const card = event.target.closest('.product-card');
+            if (card) {
+                const productId = parseInt(card.getAttribute('data-id'));
+                const selectedProduct = products.find(p => p.id === productId);
+                if (selectedProduct) {
+                    openProductModal(selectedProduct);
+                }
+            }
+        });
+
+        // Event listener para el buscador
+        searchInput.addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            renderProducts(filteredProducts);
+        });
+
+        // Lógica del mensaje emergente (pre-modal)
+        const messageBox = document.getElementById('message-container');
+        const messageText = document.getElementById('message-text');
+        const closeButton = document.getElementById('close-message');
+
         closeButton.addEventListener('click', () => {
             messageBox.style.display = 'none';
         });
